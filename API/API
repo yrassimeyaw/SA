@@ -1,1 +1,406 @@
 ## API
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Group Products API",
+    "version": "1.0.0",
+    "description": "API for managing products within groups."
+  },
+  "paths": {
+    "/group/{group_id}/products": {
+      "post": {
+        "summary": "Create a product in a group",
+        "description": "Adds a product to the specified group.",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the group to which the product will be added.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_id": {
+                    "type": "integer",
+                    "example": 2
+                  },
+                  "products_name": {
+                    "type": "string",
+                    "example": "Молоко 3,5% Милкавита"
+                  },
+                  "start_price": {
+                    "type": "number",
+                    "format": "float",
+                    "example": 1.95
+                  },
+                  "discount": {
+                    "type": "number",
+                    "example": 5
+                  },
+                  "products_char_code": {
+                    "type": "string",
+                    "example": "A1024"
+                  },
+                  "count_of_products_warehouse": {
+                    "type": "integer",
+                    "example": 55
+                  }
+                },
+                "required": ["group_id", "products_name", "start_price", "products_char_code", "count_of_products_warehouse"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "group_id": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "product_id": {
+                      "type": "integer",
+                      "example": 55
+                    },
+                    "products_name": {
+                      "type": "string",
+                      "example": "Молоко 3,5% Милкавита"
+                    },
+                    "start_price": {
+                      "type": "number",
+                      "format": "float",
+                      "example": 1.95
+                    },
+                    "discount": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "products_char_code": {
+                      "type": "string",
+                      "example": "A1024"
+                    },
+                    "count_of_products_warehouse": {
+                      "type": "integer",
+                      "example": 55
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "not found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The product group with ID 2 does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{product_id}": {
+      "patch": {
+        "summary": "Update product details",
+        "description": "Update details of a product by its ID.",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the product to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product details updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "group_id": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "product_id": {
+                      "type": "integer",
+                      "example": 55
+                    },
+                    "products_name": {
+                      "type": "string",
+                      "example": "Молоко 3,5% Милкавита"
+                    },
+                    "start_price": {
+                      "type": "number",
+                      "format": "float",
+                      "example": 1.95
+                    },
+                    "discount": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "products_char_code": {
+                      "type": "string",
+                      "example": "A1024"
+                    },
+                    "count_of_products_warehouse": {
+                      "type": "integer",
+                      "example": 55
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "not found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The product with ID 55 does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a product",
+        "description": "Deletes a product by its ID.",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the product to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product successfully deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Product with ID 55 has been successfully deleted."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "not found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "The product with ID 55 does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Get all products in the cart",
+        "description": "Retrieve a list of all products in the cart.",
+        "responses": {
+          "200": {
+            "description": "List of products retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "product_id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "product_name": {
+                            "type": "string",
+                            "example": "Молоко 3.5% Милкавита"
+                          },
+                          "start_price": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 1.95
+                          },
+                          "discount": {
+                            "type": "number",
+                            "example": 5
+                          },
+                          "products_char_code": {
+                            "type": "string",
+                            "example": "A1024"
+                          },
+                          "count_of_products_warehouse": {
+                            "type": "integer",
+                            "example": 55
+                          },
+                          "create_time": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-11-06T18:55:21.783418"
+                          },
+                          "update_time": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-11-06T18:55:21.783418"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Products not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "not found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No products found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients": {
+      "get": {
+        "summary": "Get all registered clients",
+        "description": "Retrieves a list of all registered clients.",
+        "responses": {
+          "200": {
+            "description": "List of clients retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "clients": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "client_id": {
+                            "type": "integer",
+                            "example": 256
+                          },
+                          "client_status": {
+                            "type": "string",
+                            "example": "VIP"
+                          },
+                          "login": {
+                            "type": "string",
+                            "example": "ivanov@gmail.com"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Clients not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No clients found."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
